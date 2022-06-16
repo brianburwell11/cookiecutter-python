@@ -15,7 +15,6 @@ jobs:
       - uses: snok/install-poetry@v1
 
       - run: poetry install
-      - run: poetry remove pdoc --dev
       - run: poetry add pdoc3 --dev
       - run: poetry run pdoc --force -o docs PACKAGE_NAME
       - run: mv docs/PACKAGE_NAME/index.md docs/PACKAGE_NAME/Home.md

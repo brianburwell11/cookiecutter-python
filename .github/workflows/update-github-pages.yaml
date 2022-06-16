@@ -11,28 +11,23 @@ permissions:
   contents: read
 
 jobs:
-  # Build the documentation and upload the static HTML files as an artifact.
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
+      - uses: snok/install-poetry@v1
 
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-
-      # install all dependencies (including pdoc)
       - run: poetry install
-      - run: poetry run pdoc -d numpy -o docs/ PACKAGE_NAME/
+      - run: poetry add pdoc --dev
+      - run: poetry run pdoc -d numpy -o docs PACKAGE_NAME
 
       - run: tar --directory docs/ -hcf artifact.tar .
       - uses: actions/upload-artifact@v3
         with:
           name: github-pages
           path: ./artifact.tar
-  
-  # Deploy the artifact to GitHub pages.
-  # This is a separate job so that only actions/deploy-pages has the necessary permissions.
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
