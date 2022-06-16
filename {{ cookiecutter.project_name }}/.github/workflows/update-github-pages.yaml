@@ -20,7 +20,7 @@ jobs:
 
       - run: poetry install
       - run: poetry add pdoc --dev
-      - run: poetry run pdoc -d numpy -o docs PACKAGE_NAME
+      - run: poetry run pdoc -d numpy -o docs {{ cookiecutter.project_slug }}
 
       - run: tar --directory docs/ -hcf artifact.tar .
       - uses: actions/upload-artifact@v3
@@ -36,7 +36,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: {{ '${{ steps.deployment.outputs.page_url }}' }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v1
