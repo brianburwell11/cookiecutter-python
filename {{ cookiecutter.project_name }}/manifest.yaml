@@ -1,0 +1,10 @@
+features:
+  - name: github_pages
+    enabled: {{cookiecutter.documentation=='GitHub Pages'}}
+    resources:
+      - .github/workflows/update-github-pages.yaml
+
+  - name: github_wiki
+    enabled: {{cookiecutter.documentation=='GitHub Wiki'}}
+    resources:
+      - .github/workflows/update-github-wiki.yaml

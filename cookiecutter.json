@@ -2,10 +2,11 @@
     "full_name": "Brian Burwell",
     "email": "brianburwell11@example.com",
     "github_username": "brianburwell11",
-    "project_name": "my-cookiecutter-project",
+    "project_name": "my-python-project",
     "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
     "project_short_description": "",
     "version": "0.1.0",
+    "documentation": ["GitHub Wiki", "GitHub Pages", "None"],
     "atlassian_project": null,
     "jira_prefix": ""
   }
