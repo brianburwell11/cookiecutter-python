@@ -18,9 +18,14 @@ jobs:
       - uses: actions/setup-python@v3
       - uses: snok/install-poetry@v1
 
-      - run: poetry install
-      - run: poetry add pdoc --dev
-      - run: poetry run pdoc -d numpy -o docs {{ cookiecutter.project_slug }}
+      - name: Switch authentication methods for private repositories
+        run: git config --global url."https://{% raw %}${{ secrets.PERSONAL_ACCESS_TOKEN }}{% endraw %}@github.com/{{ cookiecutter.github_username }}".insteadOf ssh://git@github.com/{{ cookiecutter.github_username }}
+      - name: Install dependencies
+        run: |
+        poetry install
+        poetry add pdoc --dev
+      - name: Build documentation
+        run: poetry run pdoc -d numpy -o docs {{ cookiecutter.project_slug }}
 
       - run: tar --directory docs/ -hcf artifact.tar .
       - uses: actions/upload-artifact@v3
