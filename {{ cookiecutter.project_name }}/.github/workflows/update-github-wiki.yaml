@@ -18,12 +18,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-        poetry install
-        poetry add pdoc3 --dev
+          poetry install
+          poetry add pdoc3 --dev
       - name: Build Documentation
         run: |
-        poetry run pdoc --force -o docs {{ cookiecutter.project_slug }}
-        mv docs/{{ cookiecutter.project_slug }}/index.md docs/{{ cookiecutter.project_slug }}/Home.md
+          poetry run pdoc --force -o docs {{ cookiecutter.project_slug }}
+          mv docs/{{ cookiecutter.project_slug }}/index.md docs/{{ cookiecutter.project_slug }}/Home.md
 
       - name: Upload Documentation to Wiki
         uses: SwiftDocOrg/github-wiki-publish-action@v1
