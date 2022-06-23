@@ -14,14 +14,14 @@ jobs:
       - name: Check out
         uses: actions/checkout@v2
         with:
-          token: {{ '"${{ secrets.PERSONAL_ACCESS_TOKEN }}"' }}
+          token: {{ '"${{ secrets.GITHUB_TOKEN }}"' }}
           fetch-depth: 0
       - name: Create bump and changelog
         uses: commitizen-tools/commitizen-action@master
         with:
           git_name: {{ cookiecutter.full_name }}
           git_email: {{ cookiecutter.email }}
-          github_token: {{ '${{ secrets.PERSONAL_ACCESS_TOKEN }}' }}
+          github_token: {{ '${{ secrets.GITHUB_TOKEN }}' }}
           changelog_increment_filename: body.md
           extra_requirements: cz-github-jira-conventional-footer
       - name: Release
@@ -30,5 +30,5 @@ jobs:
           body_path: "body.md"
           tag_name: {{ '${{ env.REVISION }}' }}
         env:
-          GITHUB_TOKEN: {{ '${{ secrets.PERSONAL_ACCESS_TOKEN }}' }}
+          GITHUB_TOKEN: {{ '${{ secrets.GITHUB_TOKEN }}' }}
 

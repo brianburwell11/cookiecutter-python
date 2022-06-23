@@ -11,11 +11,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: {{ '${{ secrets.GITHUB_TOKEN }}' }}
       - uses: actions/setup-python@v3
       - uses: snok/install-poetry@v1
 
-      - name: Switch authentication methods for private repositories
-        run: git config --global url."https://{% raw %}${{ secrets.PERSONAL_ACCESS_TOKEN }}{% endraw %}@github.com/{{ cookiecutter.github_username }}".insteadOf ssh://git@github.com/{{ cookiecutter.github_username }}
       - name: Install dependencies
         run: |
         poetry install
