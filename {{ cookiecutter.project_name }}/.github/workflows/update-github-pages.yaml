@@ -1,12 +1,10 @@
-name: update github pages documentation
+name: Update GitHub Pages
 
-# build the documentation whenever there are new commits on main
 on:
   push:
     branches:
       - master
 
-# security: restrict permissions for CI jobs.
 permissions:
   contents: read
 
@@ -25,9 +23,10 @@ jobs:
           poetry install
           poetry add pdoc --dev
       - name: Build documentation
-        run: poetry run pdoc -d numpy -o docs {{ cookiecutter.project_slug }}
-
-      - run: tar --directory docs/ -hcf artifact.tar .
+        run: |
+          poetry run pdoc -d numpy -o docs {{ cookiecutter.project_slug }}
+          tar --directory docs/ -hcf artifact.tar .
+          
       - uses: actions/upload-artifact@v3
         with:
           name: github-pages

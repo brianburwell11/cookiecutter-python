@@ -24,7 +24,6 @@ jobs:
         run: |
           poetry run pdoc --force -o docs {{ cookiecutter.project_slug }}
           mv docs/{{ cookiecutter.project_slug }}/index.md docs/{{ cookiecutter.project_slug }}/Home.md
-
       - name: Upload Documentation to Wiki
         uses: SwiftDocOrg/github-wiki-publish-action@v1
         with:
