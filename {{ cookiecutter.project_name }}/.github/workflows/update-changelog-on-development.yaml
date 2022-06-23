@@ -1,0 +1,36 @@
+name: Update Changelog
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  update-unreleased-changelog:
+    if: "!startsWith(github.event.head_commit.message, 'docs(changelog):')"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: {{ '${{ secrets.GITHUB_TOKEN }}' }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v3
+      - uses: snok/install-poetry@v1
+
+      - name: Install dependencies
+        run: poetry install
+      - name: Update changelog
+        id: update-changelog
+        run: poetry run cz changelog
+      - name: Check if updated
+        id: check-updates
+        run: git diff --exit-code
+      - name: Commit updates
+        if: steps.update-changelog.outputs.exit_code == 0 && steps.check-updates.outputs.exit_code != 0
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add docs/CHANGELOG.md
+          git commit -m "docs(changelog): update changelog"
+          git push
