@@ -29,8 +29,8 @@ jobs:
       - name: Commit updates
         if: steps.update-changelog.outputs.exit_code == 0 && steps.check-updates.outputs.exit_code != 0
         run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git config user.name "${{ github_actions_name }}"
+          git config user.email "${{ github_actions_email }}"
           git add docs/CHANGELOG.md
           git commit -m "docs(changelog): update changelog"
           git push
