@@ -16,13 +16,12 @@ jobs:
           token: {{ '${{ secrets.GITHUB_TOKEN }}' }}
           fetch-depth: 0
       - uses: actions/setup-python@v3
-      - uses: snok/install-poetry@v1
 
       - name: Install dependencies
-        run: poetry install
+        run: pip install commitizen cz-github-jira-conventional-footer
       - name: Update changelog
         id: update-changelog
-        run: poetry run cz changelog
+        run: cz changelog
       - name: Check if updated
         run: |
           if git diff --exit-code; then
