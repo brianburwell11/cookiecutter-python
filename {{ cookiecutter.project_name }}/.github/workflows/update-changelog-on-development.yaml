@@ -24,10 +24,14 @@ jobs:
         id: update-changelog
         run: poetry run cz changelog
       - name: Check if updated
-        id: check-updates
-        run: git diff --exit-code
+        run: |
+          if git diff --exit-code; then
+            echo "changes_exist=false" >> $GITHUB_ENV
+          else
+            echo "changes_exist=true" >> $GITHUB_ENV
+          fi
       - name: Commit updates
-        if: steps.update-changelog.outputs.exit_code == 0 && steps.check-updates.outputs.exit_code != 0
+        if: ${{ env.changes_exist == 'true' }}
         run: |
           git config user.name "${{ github_actions_name }}"
           git config user.email "${{ github_actions_email }}"
